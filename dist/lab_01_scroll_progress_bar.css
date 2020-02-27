@@ -1,0 +1,25 @@
+body {
+    background-color: black;
+    font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: white;
+    font-weight: bold;
+    height: 400px;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    margin: 50px 50px;
+}
+
+p {
+    margin: 10px 50px;
+}
+
+.progress-bar {
+    position: fixed;
+    top: 0;
+    height: 5px;
+    width: 0%;
+    background-color: turquoise;
+}

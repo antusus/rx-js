@@ -1,0 +1,22 @@
+body {
+  background-color: black;
+  font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: white;
+  font-weight: bold;
+  margin: 25px 50px;
+}
+
+
+ol {
+  padding-left: 2em;
+}
+
+a {
+  color: white;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+li {
+  margin-bottom: 10px;
+}
