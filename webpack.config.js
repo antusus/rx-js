@@ -1,21 +1,18 @@
-var path = require('path')
-var HtmlWebpackPlugin = require('html-webpack-plugin')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
     mode: 'development',
-    devtool: 'source-map',
-    entry: './src/app.js',
-    output: {
-        filename: 'application.js',
-        path: path.resolve(__dirname, 'dist')
+    devtool: 'inline-source-map',
+    entry: {
+        index: './src/index.js',
+        '01_observables_and_observers': './src/basic/01_observables_and_observers.js'
     },
-    module: {
-        rules: [
-            {
-                test: /\.css$/,
-                use: ['style-loader', 'css-loader']
-            }
-        ]
-    },
-    plugins: [new HtmlWebpackPlugin({ template: 'src/index.html' })]
+    plugins: [
+        new CleanWebpackPlugin(),
+        new CopyWebpackPlugin([
+            { from: 'src/**/*.html', flatten: true },
+            { from: 'src/**/*.css', flatten: true }
+        ])
+    ]
 }

@@ -1,4 +1,3 @@
-import css from './stylesheet.css'
 import {Observable} from 'rxjs'
 
 const observer = {
