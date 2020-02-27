@@ -9,10 +9,12 @@ module.exports = {
         '01_observables_and_observers': './src/basic/01_observables_and_observers.js'
     },
     plugins: [
-        new CleanWebpackPlugin(),
+        new CleanWebpackPlugin({ cleanStaleWebpackAssets: false }),
         new CopyWebpackPlugin([
             { from: 'src/**/*.html', flatten: true },
             { from: 'src/**/*.css', flatten: true }
-        ])
+        ],
+            { copyUnmodified: true }
+        )
     ]
 }
