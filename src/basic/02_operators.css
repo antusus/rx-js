@@ -13,6 +13,13 @@
     height: 8em;
     width: 16em;
     background-color: lightgray;
+    text-align: center;
+}
+
+.doNotClick div {
+    display: inline-block;
+    margin-top: 3em;
+    color: black;
 }
 
 .doClick {
