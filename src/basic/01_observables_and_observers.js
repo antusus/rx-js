@@ -1,4 +1,4 @@
-import { Observable, fromEvent, of, range, from } from 'rxjs'
+import { Observable, fromEvent, of, range, from, interval, timer } from 'rxjs'
 
 console.clear();
 // ------------------------------------------------
@@ -121,3 +121,15 @@ function* hello() {
 };
 const iterator = hello();
 from(iterator).subscribe(new MyObserver('From iterator'));
+
+// ------------------------------------------------
+// Emit values based on time interval
+// ------------------------------------------------
+
+// Interval generates next value after specified time defined in ms
+// interval(1000).subscribe(new MyObserver('From interval'));
+// If you need to send firs value after different time you can use timer
+// here first value will generated after 100ms and all others after 1000ms
+//timer(100, 1000).subscribe(new MyObserver('Timer 100/1000'))
+// If you only want to generate one value after some time you can use timer withonly first argument passed
+timer(100).subscribe(new MyObserver('Timer once after 100'))
