@@ -1,8 +1,12 @@
+.main {
+    display: flex;
+}
+
 #generator {
     height: 16em;
     width: 16em;
-    float: left;
     z-index: 0;
+    margin-right: 2em;
 }
 
 .doNotClick {
@@ -21,4 +25,35 @@
 .doClick div {
     display: inline-block;
     margin-top: 3em;
+}
+
+#launch {
+    background-color: whitesmoke;
+    width: 15em;
+    height: 15em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.launchElement {
+    text-align: center;
+    color: black;
+    height: 1em;
+}
+
+#launchButton {
+    height: 4em;
+    font-size: small;
+    font-weight: 800;
+    background-color: green;
+    color: seashell;
+    margin-bottom: 1em;
+}
+
+#abortButton {
+    height: 3em;
+    background-color: red;
+    color: seashell;
 }

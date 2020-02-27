@@ -1,19 +1,31 @@
 <html>
-  <head>
-    <title>RxJS - Operators</title>
-  </head>
-  <body>
-    <main>
-      <p>Operators</p>
-      <p>Open console to view</p>
-      <p>Click pink square to generate events</p>
+
+<head>
+  <title>RxJS - Operators</title>
+</head>
+
+<body>
+  <div>
+    <p>Operators</p>
+    <p>Open console to view</p>
+    <p>Click pink square to generate events</p>
+    <div class="main">
       <div id="generator">
         <div class="doNotClick"></div>
-        <div class="doClick"><div>Click on me!</div></div>
+        <div class="doClick">
+          <div>Click on me!</div>
+        </div>
       </div>
-    </main>
-    <script type="text/javascript" src="02_operators.js"></script>
-    <link rel="stylesheet" type="text/css" href="styles.css">
-    <link rel="stylesheet" type="text/css" href="02_operators.css">
-  </body>
+      <div id="launch">
+        <h1 id="countdown" class="launchElement">10</h1>
+        <h3 id="message" class="launchElement"></h3>
+        <button id="abortButton" class="launchElement">Abort Mission!</button>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript" src="02_operators.js"></script>
+  <link rel="stylesheet" type="text/css" href="styles.css">
+  <link rel="stylesheet" type="text/css" href="02_operators.css">
+</body>
+
 </html>

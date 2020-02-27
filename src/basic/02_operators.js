@@ -1,5 +1,5 @@
-import { range, fromEvent } from "rxjs";
-import { take, map, filter, first, takeWhile } from "rxjs/operators";
+import { range, fromEvent, interval } from "rxjs";
+import { take, map, filter, first, takeWhile, takeUntil, mapTo, scan } from "rxjs/operators";
 import { MyObserver } from '../common'
 
 console.clear();
@@ -31,3 +31,30 @@ clicks$.pipe(
     takeWhile(({y}) => y <= 260, true)
 )
 .subscribe(new MyObserver('takeWhile'));
+
+// ------------------------------------------------
+// Complete a stream based on other stream
+// ------------------------------------------------
+
+const countdownElement = document.getElementById('countdown');
+const messageElement = document.getElementById('message');
+const abortButtonElement = document.getElementById('abortButton');
+const countdownFrom = 10;
+
+countdownElement.innerHTML = countdownFrom;
+
+const abortClicked$ = fromEvent(abortButtonElement, 'click');
+
+const counter$ = interval(1000);
+counter$.pipe(
+    mapTo(-1),
+    scan((accumulator, current) => accumulator + current, countdownFrom),
+    takeWhile(v => v >= 0),
+    // takeUntill will emit complete when stream provided emits a value
+    takeUntil(abortClicked$)
+).subscribe((value) => {
+    countdownElement.innerHTML = value;
+    if (value == 0) {
+        messageElement.innerHTML = 'Liftoff!';
+    }
+});
