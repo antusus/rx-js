@@ -1,4 +1,5 @@
 import { Observable, fromEvent, of, range, from, interval, timer } from 'rxjs'
+import { MyObserver } from '../common'
 
 console.clear();
 // ------------------------------------------------
@@ -58,16 +59,6 @@ const asyncObservable = new Observable(subscriber => {
 // ------------------------------------------------
 
 //You can add two sunscriptions together
-
-class MyObserver {
-    constructor(name) {
-        this.name = name;
-    }
-
-    next(value) { console.log(`${this.name}: Next value`, value) }
-    erro(error) { console.errorlog(`${this.name}: Error`, error) }
-    complete() { console.log(`${this.name}: Complete!`) }
-};
 
 const subscriptionOne = asyncObservable.subscribe(new MyObserver('One'));
 const subscriptionTwo = asyncObservable.subscribe(new MyObserver('Two'));

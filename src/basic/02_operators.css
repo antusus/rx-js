@@ -1,0 +1,24 @@
+#generator {
+    height: 16em;
+    width: 16em;
+    float: left;
+    z-index: 0;
+}
+
+.doNotClick {
+    height: 8em;
+    width: 16em;
+    background-color: lightgray;
+}
+
+.doClick {
+    height: 8em;
+    width: 16em;
+    background-color: darkcyan;
+    text-align: center;
+}
+
+.doClick div {
+    display: inline-block;
+    margin-top: 3em;
+}

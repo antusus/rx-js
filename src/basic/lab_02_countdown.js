@@ -18,6 +18,8 @@ counter$.pipe(
     scan((accumulator, current) => accumulator + current, countdownFrom),
     //filter will not stop subscription, take while will
     // filter(v => v >= 0)
+    // tap allows us to see next value, it should not have side effects
+    tap(v => console.log(`Next value ${v}`)),
     takeWhile(v => v >= 0)
 ).subscribe((value) => {
     countdownElement.innerHTML = value;

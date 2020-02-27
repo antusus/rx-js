@@ -5,8 +5,9 @@ module.exports = {
     mode: 'development',
     devtool: 'inline-source-map',
     entry: {
-        'index': './src/index.js',
+        'common': './src/common.js',
         '01_observables_and_observers': './src/basic/01_observables_and_observers.js',
+        '02_operators': './src/basic/02_operators.js',
         'lab_01_scroll_progress_bar': './src/basic/lab_01_scroll_progress_bar.js',
         'lab_02_countdown': './src/basic/lab_02_countdown.js'
     },
