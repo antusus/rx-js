@@ -1,5 +1,5 @@
 import { range, fromEvent, interval, from } from "rxjs";
-import { take, map, filter, first, takeWhile, takeUntil, mapTo, scan, distinctUntilChanged, distinctUntilKeyChanged } from "rxjs/operators";
+import { tap, take, map, filter, first, takeWhile, takeUntil, mapTo, scan, distinctUntilChanged, distinctUntilKeyChanged, debounce, debounceTime, pluck, throttleTime, sampleTime, auditTime } from "rxjs/operators";
 import { MyObserver } from '../common'
 
 console.clear();
@@ -84,3 +84,46 @@ from([
     // usefull when comparing key from object
     distinctUntilKeyChanged('name')
 ).subscribe(new MyObserver('distinctUntilKeyChanged'));
+
+// ------------------------------------------------
+// Rate limiting operators
+// ------------------------------------------------
+
+// ------------- debounceTime ---------------------
+const input = document.getElementById('text-input');
+const keys$ = fromEvent(input, 'keyup');
+keys$.pipe(
+    // debounceTime emits last emitted value after pause specified in milliseconds
+    debounceTime(300),
+    // simmilar to map - alows for easier extraction of properties from objects
+    pluck('target', 'value'),
+    // if user removes letter and types same again we will not emit update
+    distinctUntilChanged()
+).subscribe(new MyObserver('Debounce'));
+
+// ------------- throttleTime - check lab01 --------
+interval(500).pipe(
+    tap(v => console.log(`Value emitted ${v} [every 500ms]`)),
+    // we should skip 2,3,4 because after value emission throttleTime is ignoring values for specified time
+    throttleTime(2000),
+    takeWhile(v => v <= 10)
+).subscribe(new MyObserver('throttleTime[2s]'));
+
+// ------------- sampleTime ------------------------
+interval(500).pipe(
+    // periodically checks what value was emmited and emits is 
+    // here we are checking every 2s
+    // 0,5s - 0; 1s - 1; 1,5s - 2 at 2s observable is proped and value 2 is emited
+    sampleTime(2000),
+    takeWhile(v => v <= 10)
+).subscribe(new MyObserver('sampleTime[2s]'));
+
+// ------------- auditTime -------------------------
+interval(500).pipe(
+    // periodically checks what value was emmited and emits first value observed
+    // simmilar to throttleTime but is 
+    // here we are checking every 2s
+    // 0,5s - 0; 1s - 1; 1,5s - 2 at 2s observable is proped and value 2 is emited
+    auditTime(2000),
+    takeWhile(v => v <= 10)
+).subscribe(new MyObserver('auditTime[2s]'));

@@ -6,7 +6,6 @@
     height: 16em;
     width: 16em;
     z-index: 0;
-    margin-right: 2em;
 }
 
 .doNotClick {
@@ -34,7 +33,7 @@
     margin-top: 3em;
 }
 
-#launch {
+.example {
     background-color: whitesmoke;
     width: 15em;
     height: 15em;
@@ -42,6 +41,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    margin-left: 2em;
 }
 
 .launchElement {
@@ -63,4 +63,14 @@
     height: 3em;
     background-color: red;
     color: seashell;
+}
+
+#debounce span {
+    color: black;
+    margin-bottom: 1em;
+}
+
+#debounce input {
+    font-size: larger;
+    width: 8em;
 }
