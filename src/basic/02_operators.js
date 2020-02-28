@@ -1,5 +1,5 @@
-import { range, fromEvent, interval, from } from "rxjs";
-import { tap, take, map, filter, first, takeWhile, takeUntil, mapTo, scan, distinctUntilChanged, distinctUntilKeyChanged, debounce, debounceTime, pluck, throttleTime, sampleTime, auditTime } from "rxjs/operators";
+import { range, fromEvent, interval, from, of } from "rxjs";
+import { tap, take, map, filter, first, takeWhile, takeUntil, mapTo, scan, distinctUntilChanged, distinctUntilKeyChanged, debounce, debounceTime, pluck, throttleTime, sampleTime, auditTime, delay, mergeMap, switchMap, concatMap } from "rxjs/operators";
 import { MyObserver } from '../common'
 
 console.clear();
@@ -127,3 +127,40 @@ interval(500).pipe(
     auditTime(2000),
     takeWhile(v => v <= 10)
 ).subscribe(new MyObserver('auditTime[2s]'));
+
+// ------------------------------------------------
+// Flatening/Transformation operators
+// ------------------------------------------------
+
+// simulates network traffic
+function savePosition(location) {
+    return of(location).pipe(delay(1000));
+}
+
+const flattenClicks$ = fromEvent(document.getElementById('flatten'), 'click');
+
+function clickToPosition() {
+    return map(e => ({
+        x: e.clientX,
+        y: e.clientY,
+        timestamp: Date.now()
+    }));
+}
+
+// mergeMap - subscribes to all inner observables and emits values - does not care about order
+flattenClicks$.pipe(
+    clickToPosition(),
+    tap(pos => console.log('mergeMap Position', pos)),
+    // every click will create new observable
+    // mergeMap will subscribe to each one of them and emit values from them
+    mergeMap(savePosition)
+).subscribe(new MyObserver('mergeMap'))
+
+// switchMap - subscribes to last inner observable and emits values, other is canceled
+// here each click restarts counter
+flattenClicks$.pipe(
+    // every click will create new observable
+    // switchMap will subscribe to last one canceling previous
+    switchMap(() => interval(1000)),
+    takeWhile(v => v < 15)
+).subscribe(new MyObserver('switchMap'))
