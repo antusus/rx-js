@@ -65,7 +65,7 @@
     color: seashell;
 }
 
-span {
+p {
     color: black;
     margin-bottom: 1em;
 }
@@ -73,4 +73,21 @@ span {
 #debounce input {
     font-size: larger;
     width: 8em;
+}
+
+.radioList {
+    display: flex;
+    flex-direction: column;
+    justify-items: left;
+    width: 100%;
+    margin-left: 3em;
+}
+
+.radioGroup {
+    float: left;
+}
+
+.radioGroup label {
+    color: black;
+    margin-left: 0.5em;
 }
