@@ -1,5 +1,5 @@
-import { range, fromEvent, interval, from, of } from "rxjs";
-import { tap, take, map, filter, first, takeWhile, takeUntil, mapTo, scan, distinctUntilChanged, distinctUntilKeyChanged, debounce, debounceTime, pluck, throttleTime, sampleTime, auditTime, delay, mergeMap, switchMap, concatMap } from "rxjs/operators";
+import { range, fromEvent, interval, from, of, throwError, empty } from "rxjs";
+import { tap, take, map, filter, first, takeWhile, takeUntil, mapTo, scan, distinctUntilChanged, distinctUntilKeyChanged, debounce, debounceTime, pluck, throttleTime, sampleTime, auditTime, delay, mergeMap, switchMap, concatMap, catchError } from "rxjs/operators";
 import { MyObserver } from '../common'
 
 console.clear();
@@ -137,6 +137,16 @@ function save(any) {
     return of(any).pipe(delay(1000));
 }
 
+var saveCount = 1;
+function saveWithError(any) {
+    saveCount += 1;
+    if (saveCount % 5 === 0) {
+        return throwError('Save failed');
+    } else {
+        return save(any);
+    }
+}
+
 const flattenClicks$ = fromEvent(document.getElementById('flatten'), 'click');
 
 function clickToPosition() {
@@ -173,6 +183,14 @@ flattenClicks$.pipe(
 const radios = document.querySelectorAll('.radioOption');
 fromEvent(radios, 'click').pipe(
     pluck('target', 'value'),
-    concatMap(v => save(v))
+    concatMap(v => saveWithError(v).pipe(
+        // if save throws an error we would stop listening on input clicks
+        // catch error allows us to respond to an error, here we return empty and hope that next 
+        // call will succeed
+        catchError((error, caught) => {
+            console.error(`error: ${error}`, caught);
+            return empty();
+        })
+    ))
 )
-.subscribe(new MyObserver('concatMap'));
+    .subscribe(new MyObserver('concatMap'));
