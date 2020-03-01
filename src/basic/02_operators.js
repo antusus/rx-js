@@ -1,6 +1,6 @@
-import { range, fromEvent, interval, from, of, throwError, empty } from "rxjs";
+import { range, fromEvent, interval, from, empty } from "rxjs";
 import { tap, take, map, filter, first, takeWhile, takeUntil, mapTo, scan, distinctUntilChanged, distinctUntilKeyChanged, debounce, debounceTime, pluck, throttleTime, sampleTime, auditTime, delay, mergeMap, switchMap, concatMap, catchError } from "rxjs/operators";
-import { MyObserver } from '../common'
+import { MyObserver, save, saveWithError, clickToPosition } from '../common'
 
 console.clear();
 
@@ -132,30 +132,7 @@ interval(500).pipe(
 // Flatening/Transformation operators
 // ------------------------------------------------
 
-// simulates network traffic
-function save(any) {
-    return of(any).pipe(delay(1000));
-}
-
-var saveCount = 1;
-function saveWithError(any) {
-    saveCount += 1;
-    if (saveCount % 5 === 0) {
-        return throwError('Save failed');
-    } else {
-        return save(any);
-    }
-}
-
 const flattenClicks$ = fromEvent(document.getElementById('flatten'), 'click');
-
-function clickToPosition() {
-    return map(e => ({
-        x: e.clientX,
-        y: e.clientY,
-        timestamp: Date.now()
-    }));
-}
 
 // mergeMap - subscribes to all inner observables and emits values - does not care about order
 flattenClicks$.pipe(
