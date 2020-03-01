@@ -1,5 +1,6 @@
 import { Observable, fromEvent, of, range, from, interval, timer } from 'rxjs'
-import { MyObserver } from '../common'
+import { MyObserver, fromClickById } from '../common'
+import { switchMapTo } from 'rxjs/operators';
 
 console.clear();
 // ------------------------------------------------
@@ -9,18 +10,20 @@ console.clear();
 // Observer needs next, error and complete methods
 const observer = {
     next: value => console.log(`Next value ${value}`),
-    error: error => console.errorlog('Error', error),
+    error: error => console.error('Error', error),
     complete: () => console.log('Complete!')
 };
 
 // Observable
-const observable = new Observable(subscriber => {
-    subscriber.next('Hello');
-    subscriber.next('from');
-    subscriber.next('RxJS');
-    subscriber.complete();
-    subscriber.next('This will be ignored');
-});
+const observable = fromClickById('startManualCreation').pipe(
+    switchMapTo(new Observable(subscriber => {
+        subscriber.next('Hello');
+        subscriber.next('from');
+        subscriber.next('RxJS');
+        subscriber.complete();
+        subscriber.next('This will be ignored');
+    }))
+);
 
 //Nothing will be produced by Observable unless someone subscribes
 observable.subscribe(observer);
@@ -32,26 +35,28 @@ observable.subscribe(value => console.log('Partial observable next', value));
 // Delivering values asynchronously with Observable
 // ------------------------------------------------
 
-const asyncObservable = new Observable(subscriber => {
-    let count = 0;
-    const id = setInterval(() => {
-        subscriber.next(count);
-        count += 1;
-        if (count >= 10) {
-            subscriber.complete();
-        }
-    }, 500);
+const asyncObservable = fromClickById('startAsync').pipe(
+    switchMapTo(new Observable(subscriber => {
+        let count = 0;
+        const id = setInterval(() => {
+            subscriber.next(count);
+            count += 1;
+            if (count >= 10) {
+                subscriber.complete();
+            }
+        }, 500);
 
-    //You can return function that will clean any resources you are managing in observable
-    return () => {
-        console.log('Clean function called');
-        clearInterval(id);
-    };
-});
+        //You can return function that will clean any resources you are managing in observable
+        return () => {
+            console.log('Clean function called');
+            clearInterval(id);
+        };
+    }))
+);
 
-// console.log('Before running async observable');
-// asyncObservable.subscribe(observer);
-// console.log('After running async observable');
+console.log('Before running async observable');
+asyncObservable.subscribe(observer);
+console.log('After running async observable');
 //We expect all logs from async observable to appear after this last log
 
 // ------------------------------------------------

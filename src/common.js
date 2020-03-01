@@ -1,4 +1,4 @@
-import { of, throwError, from } from 'rxjs'
+import { of, throwError, fromEvent } from 'rxjs'
 import { delay, map } from 'rxjs/operators'
 
 export class MyObserver {
@@ -32,4 +32,8 @@ export function saveWithError(any) {
     } else {
         return save(any);
     }
+};
+
+export function fromClickById(elementId) {
+    return fromEvent(document.getElementById(elementId), 'click');
 };
