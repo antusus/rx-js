@@ -1,0 +1,28 @@
+<html>
+<header>
+    <title>Lab 03: Http Polling</title>
+</header>
+
+<body>
+    <div class="polling">
+        <h1>
+            Start polling to request random <a href="https://random.dog/">dog</a> images!
+        </h1>
+        <h3>After clicking start every <span id="interval"></span>ms new dog image will appear!</h3>
+        <h2>
+            Polling Status:
+            <span id="polling-status">Stopped</span>
+        </h2>
+        <div class="buttons">
+            <button id="start">Start Polling</button>
+            <button id="stop">Stop Polling</button>
+        </div>
+
+        <img id="dog"
+            src="https://random.dog/10fa025a-b04a-47d7-bfed-98747269b6c2.jpg" alt="dog!" />
+    </div>
+    <script type="text/javascript" src="lab_03_http_polling.js"></script>
+    <link rel="stylesheet" type="text/css" href="lab_03_http_polling.css">
+</body>
+
+</html>

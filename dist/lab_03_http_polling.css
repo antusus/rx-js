@@ -1,0 +1,34 @@
+body {
+    width: 38em;
+    margin: 0.5em auto;
+}
+
+h2, h3, img {
+    margin: 0.5em auto;
+}
+
+.polling {
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+}
+
+.buttons {
+    margin: 1em auto;
+}
+
+#start {
+    color: white;
+    background-color: green;
+    font-size: larger;
+}
+
+#stop {
+    background-color: red;
+    font-size: larger;
+}
+
+#dog {
+    margin-top: 1em;
+    max-width: 200px;
+}
