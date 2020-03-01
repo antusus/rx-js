@@ -133,8 +133,8 @@ interval(500).pipe(
 // ------------------------------------------------
 
 // simulates network traffic
-function savePosition(location) {
-    return of(location).pipe(delay(1000));
+function save(any) {
+    return of(any).pipe(delay(1000));
 }
 
 const flattenClicks$ = fromEvent(document.getElementById('flatten'), 'click');
@@ -153,7 +153,7 @@ flattenClicks$.pipe(
     tap(pos => console.log('mergeMap Position', pos)),
     // every click will create new observable
     // mergeMap will subscribe to each one of them and emit values from them
-    mergeMap(savePosition)
+    mergeMap(save)
 ).subscribe(new MyObserver('mergeMap'))
 
 // switchMap - subscribes to last inner observable and emits values, other is canceled
@@ -164,3 +164,15 @@ flattenClicks$.pipe(
     switchMap(() => interval(1000)),
     takeWhile(v => v < 15)
 ).subscribe(new MyObserver('switchMap'))
+
+// concatMap - subscribe to observables in orde of apperance
+
+// each click on radioOption will trigger save function to be called
+// concatMap keeps only one Observale active, others are stored in order of apperance
+// if one finishes then next is subscribed to
+const radios = document.querySelectorAll('.radioOption');
+fromEvent(radios, 'click').pipe(
+    pluck('target', 'value'),
+    concatMap(v => save(v))
+)
+.subscribe(new MyObserver('concatMap'));

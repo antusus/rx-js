@@ -23,13 +23,31 @@
         <button id="abortButton" class="launchElement">Abort Mission!</button>
       </div>
       <div id="debounce" class="example">
-        <span>Type for debounce</span>
+        <p>Type for debounce</p>
         <input id="text-input">
       </div>
       <div id="flatten" class="example">
-        <span>Click me!</span>
+        <p>Click me!</p>
+      </div>
+      <div id="concatMap" class="example">
+        <p>Select your favourite operator</p>
+        <div class="radioList">
+          <div class="radioGroup">
+            <input type="radio" name="operator" value="mergeMap" class="radioOption">
+            <label for="mergeMap">mergeMap</label>
+          </div>
+          <div class="radioGroup">
+            <input type="radio" name="operator" value="switchMap" class="radioOption">
+            <label for="switchMap">switchMap</label>
+          </div>
+          <div class="radioGroup">
+            <input type="radio" name="operator" value="concatMap" class="radioOption">
+            <label for="concatMap">concatMap</label>
+          </div>
+        </div>
       </div>
     </div>
+  </div>
   </div>
   <script type="text/javascript" src="02_operators.js"></script>
   <link rel="stylesheet" type="text/css" href="styles.css">
